@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Schedule{% endblock %}
+
+{% block content %}
+
+  <table> <!-- I'll worry about the border later -->
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Credits</th>
+    </tr>
+  {% for class in classes %}
+    <tr>
+      <td>{{ class['course_title'] }}</td>
+      <td>{{ class['description'] }}</td>
+      <td>{{ class['credits'] }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+
+{% endblock %}
