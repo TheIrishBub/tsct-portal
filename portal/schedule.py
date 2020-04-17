@@ -7,6 +7,7 @@ bp = Blueprint("schedule", __name__)
 
 # Page where students can view their schedules
 @bp.route("/schedule", methods=('GET', 'POST'))
+# I don't think I need the methods here (?)
 @login_required
 @student_required
 def view_schedule():
@@ -20,26 +21,21 @@ def view_schedule():
 
     # Here, I will put what goes into the schedule
     cur = db.get_db().cursor()
-    # some SQL queries
-        # class name
-            # courses.course_title
     cur.execute("""
-        SELECT course_title, description, credits FROM courses
-        WHERE major_id = %s""",
+        SELECT sessions.session_name,
+                sessions.location,
+                sessions.room_number,
+                sessions.times,
+                courses.description,
+                users.name
+        FROM sessions
+        INNER JOIN courses ON courses.course_num = sessions.course_id
+        INNER JOIN users ON courses.teacher_id = users.id
+        WHERE courses.major_id = %s""",
         (g.user['major_id'],)
         )
-        # class description
-            # courses.description
-        # credits?
-            # courses.credits
-        # location
-            # sessions.location
-        # room number
-            # sessions.room_number
-        # teacher
-            # portal_users.name WHERE courses.teacher_id = portal_users.id
-    classes = cur.fetchall()
+    infos = cur.fetchall()
 
     cur.close()
 
-    return render_template("layouts/schedule.html", classes=classes)
+    return render_template("layouts/schedule.html", infos=infos)

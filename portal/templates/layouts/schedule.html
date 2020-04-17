@@ -4,17 +4,23 @@
 
 {% block content %}
 
-  <table> <!-- I'll worry about the border later -->
+  <table border=1> <!-- I'll worry about the border later -->
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Credits</th>
+      <th>Time</th>
+      <th>Location</th>
+      <th>Room Number</th>
+      <th>Teacher Name</th>
     </tr>
-  {% for class in classes %}
+  {% for info in infos %}
     <tr>
-      <td>{{ class['course_title'] }}</td>
-      <td>{{ class['description'] }}</td>
-      <td>{{ class['credits'] }}</td>
+      <td>{{ info['session_name'] }}</td>
+      <td>{{ info['description'] }}</td>
+      <td>{{ info['times'] }}</td>
+      <td>{{ info['location'] }}</td>
+      <td>{{ info['room_number'] }}</td>
+      <td>{{ info['name'] }}</td>
     </tr>
   {% endfor %}
   </table>
